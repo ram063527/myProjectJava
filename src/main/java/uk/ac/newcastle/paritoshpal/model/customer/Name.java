@@ -25,9 +25,24 @@ public final class Name {
         return lastName;
     }
 
+
     @Override
     public String toString() {
-        return firstName + " " + lastName;
+        return firstName + " - " + lastName;
+    }
+
+    public static Name valueOf(String name){
+       // 1. Validate the input string itself.
+        if(name == null || name.trim().isEmpty()){
+            throw new IllegalArgumentException("Name cannot be null or empty.");
+        }
+        String [] parts = name.split(" - ");
+        // 2. Check if the split produced exactly 2 parts
+        if(parts.length != 2){
+            throw new IllegalArgumentException("Invalid name format. Expected 'firstName - lastName', but got '" + name + "'.");
+        }
+        // 3. The constructor will handle validation of individual parts.
+        return new Name(parts[0], parts[1]);
     }
 
 
