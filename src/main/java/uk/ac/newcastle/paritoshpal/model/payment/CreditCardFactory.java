@@ -8,6 +8,10 @@ public final class CreditCardFactory {
 
     private static final Map<String, CreditCard> creditCards = new HashMap<>();
 
+    private CreditCardFactory() {
+        // empty
+    }
+
     public static CreditCard getCreditCard(String number, Date expiryDate, String holder) {
 
         if(creditCards.containsKey(number)) {
