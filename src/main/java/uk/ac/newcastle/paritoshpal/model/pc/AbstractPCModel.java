@@ -7,10 +7,7 @@ public abstract class AbstractPCModel implements PCModel {
     private final String name;
 
     protected AbstractPCModel(String name) {
-        if (name == null || name.trim().isEmpty()) {
-            throw new IllegalArgumentException("PC Model name cannot be null or empty");
-        }
-        this.name = name;
+       this.name = validateAndNormalizeName(name);
     }
 
     @Override
@@ -35,8 +32,9 @@ public abstract class AbstractPCModel implements PCModel {
         // make sure that all characters are either letters or whitespaces or digits
         char [] chars = name.toCharArray();
         for (int i = 0; i < chars.length; i++) {
-            if(!Character.isLetter(chars[i]) && !Character.isWhitespace(chars[i]) && !Character.isDigit(chars[i])){
-                throw new IllegalArgumentException("Invalid name. Character: "+chars[i]+" is invalid.");
+            char c  = chars[i];
+            if(!Character.isLetter(chars[i]) && !Character.isWhitespace(chars[i]) && !Character.isDigit(chars[i]) && c!='-'){
+                throw new IllegalArgumentException("Invalid name. Character: "+ c +" is invalid.");
             }
         }
         return name;

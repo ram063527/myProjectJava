@@ -39,6 +39,6 @@ public class CustomModel extends AbstractPCModel{
 
     @Override
     public List<String> getParts() {
-        return Collections.unmodifiableList(parts);
+        return new ArrayList<>(this.parts);
     }
 }

@@ -33,12 +33,14 @@ public class PresetModel extends AbstractPCModel{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PresetModel that = (PresetModel) o;
-        return Objects.equals(getName(), that.getName()) && Objects.equals(manufacturer, that.getManufacturer());
+        return Objects.equals(getName(), that.getName())
+                && Objects.equals(manufacturer, that.getManufacturer())
+                && Objects.equals(parts,that.parts);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), manufacturer);
+        return Objects.hash(getName(), manufacturer, parts);
     }
 
     private String validateAndNormalizeManufacturer(String name) {
