@@ -51,12 +51,6 @@ public final class Order {
     public OrderStatus getOrderStatus() {
         return status;
     }
-
-    void setStatus(OrderStatus status) {
-        this.status = status;
-    }
-
-
     /**
      * Cancels the order if it is currently placed.
      * @throws IllegalStateException if the order has already been fulfilled or cancelled.

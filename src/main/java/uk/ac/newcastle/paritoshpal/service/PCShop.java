@@ -1,5 +1,8 @@
 package main.java.uk.ac.newcastle.paritoshpal.service;
 
+import main.java.uk.ac.newcastle.paritoshpal.dto.CustomerStats;
+import main.java.uk.ac.newcastle.paritoshpal.dto.ModelStats;
+import main.java.uk.ac.newcastle.paritoshpal.dto.PartsStats;
 import main.java.uk.ac.newcastle.paritoshpal.model.customer.Customer;
 import main.java.uk.ac.newcastle.paritoshpal.model.fulfillment.FulfillmentDetails;
 import main.java.uk.ac.newcastle.paritoshpal.model.order.Order;
@@ -36,17 +39,17 @@ public interface PCShop {
      * Gets the customer with the most fulfilled orders.
      * @return An object containing the top customer and their order count.
      */
-    // CustomerStats getLargestCustomer();
+     CustomerStats getLargestCustomer();
 
     /**
      * Gets the most frequently ordered preset model across all fulfilled orders.
      * @return An object containing the top model and its order count.
      */
-    // ModelStats getMostOrderedModel();
+     ModelStats getMostOrderedModel();
 
     /**
      * Gets the most frequently used part in custom models across all fulfilled orders.
      * @return An object containing the top part and its usage count.
      */
-    // PartStats getMostOrderedPart();
+     PartsStats getMostOrderedPart();
 }

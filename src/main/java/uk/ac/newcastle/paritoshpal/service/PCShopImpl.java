@@ -1,8 +1,12 @@
 package main.java.uk.ac.newcastle.paritoshpal.service;
 
+import main.java.uk.ac.newcastle.paritoshpal.dto.CustomerStats;
+import main.java.uk.ac.newcastle.paritoshpal.dto.ModelStats;
+import main.java.uk.ac.newcastle.paritoshpal.dto.PartsStats;
 import main.java.uk.ac.newcastle.paritoshpal.model.customer.Customer;
 import main.java.uk.ac.newcastle.paritoshpal.model.fulfillment.FulfillmentDetails;
 import main.java.uk.ac.newcastle.paritoshpal.model.order.Order;
+import main.java.uk.ac.newcastle.paritoshpal.model.order.OrderStatus;
 import main.java.uk.ac.newcastle.paritoshpal.model.payment.CreditCard;
 import main.java.uk.ac.newcastle.paritoshpal.model.pc.CustomModel;
 import main.java.uk.ac.newcastle.paritoshpal.model.pc.PCModel;
@@ -73,7 +77,7 @@ public class PCShopImpl implements PCShop {
                 // Get the count for this specific model from this manufacturer
                 Integer currentModelCount = modelsForManufacturer.get(modelName);
 
-                // If we never seent this model, set its count to 1
+                // If we have never seen this model, set its count to 1
 
                 if(currentModelCount == null){
                     modelsForManufacturer.put(modelName, 1);
@@ -106,5 +110,63 @@ public class PCShopImpl implements PCShop {
             }
         }
         return new FulfillmentDetails(presetOrders,warehouseParts);
+    }
+
+    @Override
+    public CustomerStats getLargestCustomer() {
+        // create a map of customer integer
+
+        Map<Customer, Integer> customerOrderCounts = getCustomerOrderCounts();
+
+        if(customerOrderCounts.isEmpty()){
+            return null;
+        }
+
+        Customer largestCustomer = null;
+        int maxOrders = -1;
+
+        for(Map.Entry<Customer,Integer> entry: customerOrderCounts.entrySet()){
+            Customer currentCustomer = entry.getKey();
+            int currentOrderCount = entry.getValue();
+
+            if(largestCustomer==null || currentOrderCount > maxOrders){
+                maxOrders = currentOrderCount;
+                largestCustomer = currentCustomer;
+            }
+            else if(currentOrderCount == maxOrders){
+                if(currentCustomer.toString().compareTo(largestCustomer.toString()) < 0){
+                    largestCustomer = currentCustomer;
+                }
+            }
+        }
+        return new CustomerStats(largestCustomer,maxOrders);
+    }
+
+    private Map<Customer, Integer> getCustomerOrderCounts() {
+        Map<Customer,Integer> customerOrderCounts = new HashMap<>();
+
+        // Get all the fulfilled orders
+        for(Order order: this.orderHistory){
+            if(order.getOrderStatus() == OrderStatus.FULFILLED){
+                Customer customer = order.getCustomer();
+                if(customerOrderCounts.containsKey(customer)){
+                    customerOrderCounts.put(customer, customerOrderCounts.get(customer) + 1);
+                }
+                else {
+                    customerOrderCounts.put(customer,1);
+                }
+            }
+        }
+        return customerOrderCounts;
+    }
+
+    @Override
+    public ModelStats getMostOrderedModel() {
+        return null;
+    }
+
+    @Override
+    public PartsStats getMostOrderedPart() {
+        return null;
     }
 }
