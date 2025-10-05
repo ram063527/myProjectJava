@@ -1,6 +1,7 @@
 package main.java.uk.ac.newcastle.paritoshpal.service;
 
 import main.java.uk.ac.newcastle.paritoshpal.model.customer.Customer;
+import main.java.uk.ac.newcastle.paritoshpal.model.fulfillment.FulfillmentDetails;
 import main.java.uk.ac.newcastle.paritoshpal.model.order.Order;
 import main.java.uk.ac.newcastle.paritoshpal.model.payment.CreditCard;
 import main.java.uk.ac.newcastle.paritoshpal.model.pc.PCModel;
@@ -29,7 +30,7 @@ public interface PCShop {
      * @param order The order to be fulfilled.
      * @return Details required for fulfillment (e.g., parts from warehouse, models from manufacturers).
      */
-    // FulfillmentDetails fulfillOrder(Order order); // We will create this helper class later
+     FulfillmentDetails fulfillOrder(Order order); // We will create this helper class later
 
     /**
      * Gets the customer with the most fulfilled orders.
