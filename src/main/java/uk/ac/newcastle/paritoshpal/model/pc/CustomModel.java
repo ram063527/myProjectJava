@@ -41,4 +41,9 @@ public class CustomModel extends AbstractPCModel{
     public List<String> getParts() {
         return new ArrayList<>(this.parts);
     }
+
+    @Override
+    public String toString() {
+        return "Custom Model : "+this.getName();
+    }
 }
