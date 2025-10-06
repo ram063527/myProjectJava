@@ -162,11 +162,90 @@ public class PCShopImpl implements PCShop {
 
     @Override
     public ModelStats getMostOrderedModel() {
-        return null;
+        Map<PresetModel,Integer> presetModelOrderCounts = new HashMap<>();
+        for (Order order : this.orderHistory) {
+            if(order.getOrderStatus() == OrderStatus.FULFILLED){
+                for(PCModel model : order.getModels()){
+                    if(model instanceof PresetModel presetModel){
+                        if(presetModelOrderCounts.containsKey(presetModel)){
+                            presetModelOrderCounts.put(presetModel, presetModelOrderCounts.get(presetModel) + 1);
+                        }
+                        else  {
+                            presetModelOrderCounts.put(presetModel, 1);
+                        }
+                    }
+                }
+            }
+        }
+        if(presetModelOrderCounts.isEmpty()){
+            return null;
+        }
+        PresetModel highestOrdered = null;
+        int maxOrders = -1;
+
+        for(Map.Entry<PresetModel,Integer> entry: presetModelOrderCounts.entrySet()){
+            PresetModel presetModel = entry.getKey();
+            Integer currentOrderCount = entry.getValue();
+
+            if(highestOrdered==null || currentOrderCount > maxOrders){
+                highestOrdered = presetModel;
+                maxOrders = currentOrderCount;
+            }
+            else if(currentOrderCount == maxOrders){
+                int manufacturerComparison = presetModel.getManufacturer().compareTo(highestOrdered.getManufacturer());
+
+                if(manufacturerComparison < 0){
+                    highestOrdered = presetModel;
+                }
+                else if(manufacturerComparison == 0){
+                    // same manufacturer
+                    if(presetModel.getName().compareTo(highestOrdered.getName()) < 0){
+                        highestOrdered = presetModel;
+                    }
+                }
+            }
+        }
+        return new ModelStats(highestOrdered,maxOrders);
     }
 
     @Override
     public PartsStats getMostOrderedPart() {
-        return null;
+        Map<String,Integer> partsOrderCounts = new HashMap<>();
+        for(Order order: this.orderHistory){
+            if(order.getOrderStatus() == OrderStatus.FULFILLED){
+                for(PCModel model : order.getModels()){
+                    if(model instanceof CustomModel customModel){
+                        for (String part : model.getParts()) {
+                            if(partsOrderCounts.containsKey(part)){
+                                partsOrderCounts.put(part, partsOrderCounts.get(part) + 1);
+                            }
+                            else  {
+                                partsOrderCounts.put(part, 1);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if(partsOrderCounts.isEmpty()){
+            return null;
+        }
+        String highestOrderedPart = null;
+        int maxOrders = -1;
+        for(Map.Entry<String,Integer> entry: partsOrderCounts.entrySet()){
+            String part = entry.getKey();
+            Integer currentOrderCount = entry.getValue();
+
+            if(highestOrderedPart==null || currentOrderCount > maxOrders){
+                highestOrderedPart = part;
+                maxOrders = currentOrderCount;
+            }
+            else if(currentOrderCount == maxOrders){
+                if(part.compareTo(highestOrderedPart) < 0){
+                    highestOrderedPart = part;
+                }
+            }
+        }
+        return new PartsStats(highestOrderedPart,maxOrders);
     }
 }
