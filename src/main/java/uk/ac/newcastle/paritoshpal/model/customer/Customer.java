@@ -2,6 +2,10 @@ package main.java.uk.ac.newcastle.paritoshpal.model.customer;
 
 import java.util.Objects;
 
+/**
+ * Customer  - Simple Represent
+ *
+ */
 public final class Customer {
 
     private final Name name;
