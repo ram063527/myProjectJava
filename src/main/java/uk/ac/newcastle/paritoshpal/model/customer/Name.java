@@ -4,7 +4,7 @@ import java.util.Objects;
 
 /**
  * Represents a person's name as an immutable object.
- * Equality is based on first and last name components
+ * Equality is based on first and last name components.
  */
 public final class Name {
 
