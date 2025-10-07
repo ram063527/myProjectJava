@@ -105,8 +105,6 @@ public class PCShopImpl implements PCShop {
 
                 }
 
-
-
             }
         }
         return new FulfillmentDetails(presetOrders,warehouseParts);
@@ -210,23 +208,7 @@ public class PCShopImpl implements PCShop {
 
     @Override
     public PartsStats getMostOrderedPart() {
-        Map<String,Integer> partsOrderCounts = new HashMap<>();
-        for(Order order: this.orderHistory){
-            if(order.getOrderStatus() == OrderStatus.FULFILLED){
-                for(PCModel model : order.getModels()){
-                    if(model instanceof CustomModel customModel){
-                        for (String part : model.getParts()) {
-                            if(partsOrderCounts.containsKey(part)){
-                                partsOrderCounts.put(part, partsOrderCounts.get(part) + 1);
-                            }
-                            else  {
-                                partsOrderCounts.put(part, 1);
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        Map<String, Integer> partsOrderCounts = getPartsOrderCounts();
         if(partsOrderCounts.isEmpty()){
             return null;
         }
@@ -247,5 +229,26 @@ public class PCShopImpl implements PCShop {
             }
         }
         return new PartsStats(highestOrderedPart,maxOrders);
+    }
+
+    private Map<String, Integer> getPartsOrderCounts() {
+        Map<String,Integer> partsOrderCounts = new HashMap<>();
+        for(Order order: this.orderHistory){
+            if(order.getOrderStatus() == OrderStatus.FULFILLED){
+                for(PCModel model : order.getModels()){
+                    if(model instanceof CustomModel customModel){
+                        for (String part : model.getParts()) {
+                            if(partsOrderCounts.containsKey(part)){
+                                partsOrderCounts.put(part, partsOrderCounts.get(part) + 1);
+                            }
+                            else  {
+                                partsOrderCounts.put(part, 1);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return partsOrderCounts;
     }
 }

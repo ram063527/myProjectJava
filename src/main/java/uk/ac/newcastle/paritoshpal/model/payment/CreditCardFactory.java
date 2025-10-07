@@ -15,7 +15,7 @@ public final class CreditCardFactory {
     public static CreditCard getCreditCard(String number, Date expiryDate, String holder) {
 
         if(creditCards.containsKey(number)) {
-            throw new IllegalArgumentException("Credit card already exists!");
+            return creditCards.get(number);
         }
         CreditCard card = new CreditCard(number,expiryDate,holder);
         creditCards.put(number, card);
