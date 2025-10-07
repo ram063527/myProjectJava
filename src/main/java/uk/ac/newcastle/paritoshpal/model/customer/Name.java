@@ -4,7 +4,7 @@ import java.util.Objects;
 
 /**
  * Represents a person's name as an immutable object.
- * <p>Equality is based on first and last name components</p>
+ * Equality is based on first and last name components
  */
 public final class Name {
 
@@ -43,10 +43,9 @@ public final class Name {
 
     /**
      * Returns the string representation of this name.
-     * <p>
-     *     The format is "firstName - lastName", for example "john - doe".
-     *     This format is compatible with {@link #valueOf(String)} method.
-     * </p>
+     * The format is "firstName - lastName", for example "john - doe".
+     * This format is compatible with {@link #valueOf(String)} method.
+     *
      * @return the formatted string representation of the name.
      * @see #valueOf(String)
      */
@@ -57,9 +56,7 @@ public final class Name {
 
     /**
      * Obtains an instance of {@code Name} from a string representation.
-     * <p>
-     *     The string must be in the format "firstName - lastName".
-     * </p>
+     * The string must be in the format "firstName - lastName".
      *
      * @param name a name in the specified string representation
      * @return a {@code Name} instance of corresponding to the given string.
@@ -84,10 +81,11 @@ public final class Name {
 
 
     /**
+     * Compares this name to the specified object.
      *
-     * @param o   the reference object with which to compare.
-     * @return true if both current object and the reference object are same,
-     * and if first name and last name fields are equal.
+     * @param o the object to compare this {@code Name} against.
+     * @return {@code true} if the object is also a {@code Name} and the
+     * first and last names are equal; {@code false} otherwise.
      */
     @Override
     public boolean equals(Object o) {
@@ -106,10 +104,16 @@ public final class Name {
     }
 
     /**
-     * Method to validate and normalize <cod>name</cod>.
-     * @param name
-     * @return normalized <code>name</code>
-     * @throws IllegalArgumentException if name is null empty or contains invalid character.
+     * Validates and normalizes a name string.
+     *
+     * Normalization includes converting the string to lowercase, trimming leading/trailing
+     * whitespace, and collapsing internal whitespace to a single space.
+     * Validation ensures the name is not null/empty and contains only letters and spaces.
+     *
+     * @param name the name string to process.
+     * @return the validated and normalized name string.
+     * @throws IllegalArgumentException if the {@code name} is null, empty or contains
+     * invalid characters.
      */
     private String validateAndNormalizeName(String name) {
         if(name==null || name.trim().isEmpty()){
