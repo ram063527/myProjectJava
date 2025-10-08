@@ -16,7 +16,7 @@ public final class Customer {
      * @param name the name object; cannot be null.
      * @throws IllegalArgumentException if {@code name} is null.
      */
-     public Customer(Name name) {
+      Customer(Name name) {
         if(name == null){
             throw new IllegalArgumentException("Name cannot be null.");
         }
