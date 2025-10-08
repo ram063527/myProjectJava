@@ -4,8 +4,6 @@ import java.util.Objects;
 
 /**
  * Represents a customer as an immutable object.
- * Instances of this class are managed by the {@link CustomerFactory} to ensure
- * that only one object exists for each unique customer name.
  * Equality is based on the {@code Name} component.
  */
 public final class Customer {
@@ -18,7 +16,7 @@ public final class Customer {
      * @param name the name object; cannot be null.
      * @throws IllegalArgumentException if {@code name} is null.
      */
-     Customer(Name name) {
+     public Customer(Name name) {
         if(name == null){
             throw new IllegalArgumentException("Name cannot be null.");
         }

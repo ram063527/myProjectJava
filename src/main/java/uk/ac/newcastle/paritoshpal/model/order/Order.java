@@ -4,7 +4,6 @@ import main.java.uk.ac.newcastle.paritoshpal.model.customer.Customer;
 import main.java.uk.ac.newcastle.paritoshpal.model.payment.CreditCard;
 import main.java.uk.ac.newcastle.paritoshpal.model.pc.PCModel;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 

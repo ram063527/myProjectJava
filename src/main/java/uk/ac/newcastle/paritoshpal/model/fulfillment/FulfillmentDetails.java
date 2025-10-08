@@ -6,7 +6,7 @@ import java.util.Objects;
 /**
  * An immutable data class that holds the aggregated details required to
  * fulfill an order.
- * The object is returned by the {@code fullfillOrder} method and contains
+ * The object is returned by the {@code fulfillOrder} method and contains
  * two main pieces of information: a breakdown of preset models to be ordered
  * from manufacturers, list of individual parts to be collected from the warehouse
  * for custom models.
