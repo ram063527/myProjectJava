@@ -29,6 +29,22 @@ public final class FulfillmentDetails {
     }
 
     /**
+     * Gets the breakdown of preset models required from manufacturers.
+     * @return An unmodifiable map of manufacturers to their required models and quantities.
+     */
+    public Map<String, Map<String, Integer>> getPresetOrders() {
+        return presetOrders;
+    }
+
+    /**
+     * Gets the breakdown of parts required from the warehouse for custom models.
+     * @return An unmodifiable map of part names to their required quantities.
+     */
+    public Map<String, Integer> getWarehouseParts() {
+        return warehouseParts;
+    }
+
+    /**
      * Returns a string representation of the fulfillment details.
      * @return a formatted string showing the preset orders and warehouse parts.
      */
