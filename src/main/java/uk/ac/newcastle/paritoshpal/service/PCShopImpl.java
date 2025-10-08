@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PCShopImpl implements PCShop {
+public final class PCShopImpl implements PCShop {
 
     private final List<Order> orderHistory = new ArrayList<>();
 

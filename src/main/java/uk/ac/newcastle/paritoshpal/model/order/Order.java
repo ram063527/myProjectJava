@@ -25,7 +25,7 @@ public final class Order {
         this.customer = customer;
         this.creditCard = creditCard;
 
-        this.models = new ArrayList<>(models);
+        this.models =  List.copyOf(models);
         this.orderDate = new Date();
 
         this.status = OrderStatus.PLACED;

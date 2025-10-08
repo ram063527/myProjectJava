@@ -11,7 +11,7 @@ import java.util.Objects;
  * by the {@link CustomModelFactory}.Instances of this class should only be created
  * through factory.
  */
-public class CustomModel extends AbstractPCModel{
+public final class CustomModel extends AbstractPCModel{
 
     private final List<String> parts;
 
