@@ -4,7 +4,9 @@ import java.util.Objects;
 
 /**
  * Represents a customer as an immutable object.
- * Equality is based on the name component.
+ * Instances of this class are managed by the {@link CustomerFactory} to ensure
+ * that only one object exists for each unique customer name.
+ * Equality is based on the {@code Name} component.
  */
 public final class Customer {
 
