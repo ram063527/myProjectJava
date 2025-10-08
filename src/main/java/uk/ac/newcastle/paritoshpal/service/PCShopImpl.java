@@ -27,6 +27,9 @@ public final class PCShopImpl implements PCShop {
 
     private final List<Order> orderHistory = new ArrayList<>();
 
+    /**
+     * {@inheritDoc}
+     */
 
     @Override
     public Order placeOrder(List<PCModel> models, Customer customer, CreditCard creditCard) {
@@ -48,6 +51,10 @@ public final class PCShopImpl implements PCShop {
         return newOrder;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+
     @Override
     public void cancelOrder(Order order) {
         if(order == null){
@@ -55,6 +62,10 @@ public final class PCShopImpl implements PCShop {
         }
         order.cancel();
     }
+
+    /**
+     * {@inheritDoc}
+     */
 
     @Override
     public FulfillmentDetails fulfillOrder(Order order) {
@@ -119,6 +130,10 @@ public final class PCShopImpl implements PCShop {
         return new FulfillmentDetails(presetOrders,warehouseParts);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+
     @Override
     public CustomerStats getLargestCustomer() {
         // create a map of customer integer
@@ -171,6 +186,10 @@ public final class PCShopImpl implements PCShop {
         return customerOrderCounts;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+
     @Override
     public ModelStats getMostOrderedModel() {
         Map<PresetModel,Integer> presetModelOrderCounts = new HashMap<>();
@@ -218,6 +237,10 @@ public final class PCShopImpl implements PCShop {
         }
         return new ModelStats(highestOrdered,maxOrders);
     }
+
+    /**
+     * {@inheritDoc}
+     */
 
     @Override
     public PartsStats getMostOrderedPart() {
