@@ -25,7 +25,7 @@ public final class CreditCard {
      * is non 8-digits string, or if the {@code holder} is empty or contains characters other than
      * letters and spaces.
      */
-    CreditCard(final String number, final Date expiryDate, final String holder) {
+    CreditCard( String number,  Date expiryDate, String holder) {
         this.number = validateNumber(number);
         if(expiryDate == null){
             throw new IllegalArgumentException("Invalid expiry date. Expiry date: "+expiryDate+" is invalid.");

@@ -17,9 +17,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The concrete implementation of the {@link PCShop} service interface.
+ * This class manages the history of all orders and provides the business logic
+ * for placing, cancelling, and fulfilling orders, as well as for generating
+ * analytics about the order history.
+ */
 public final class PCShopImpl implements PCShop {
 
     private final List<Order> orderHistory = new ArrayList<>();
+
 
     @Override
     public Order placeOrder(List<PCModel> models, Customer customer, CreditCard creditCard) {

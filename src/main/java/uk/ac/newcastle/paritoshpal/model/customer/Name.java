@@ -105,7 +105,6 @@ public final class Name {
 
     /**
      * Validates and normalizes a name string.
-     *
      * Normalization includes converting the string to lowercase, trimming leading/trailing
      * whitespace, and collapsing internal whitespace to a single space.
      * Validation ensures the name is not null/empty and contains only letters and spaces.

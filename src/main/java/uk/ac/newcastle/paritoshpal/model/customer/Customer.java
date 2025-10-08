@@ -34,6 +34,23 @@ public final class Customer {
     }
 
     /**
+     * Returns the first name of the customer.
+     * @return the first name.
+     */
+    public String getFirstName(){
+        return this.name.getFirstName();
+    }
+
+    /**
+     * Returns the last name of the customer.
+     * @return the last name.
+     */
+
+    public String getLastName(){
+        return this.name.getLastName();
+    }
+
+    /**
      * Returns the string representation of this customer.
      * Delegates the call to the {@code name} object.
      *
