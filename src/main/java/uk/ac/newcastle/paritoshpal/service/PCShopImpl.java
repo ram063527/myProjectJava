@@ -67,8 +67,11 @@ public final class PCShopImpl implements PCShop {
         Map<String, Map<String,Integer>> presetOrders = new HashMap<>();
         Map<String,Integer> warehouseParts = new HashMap<>();
 
+        // Get all the models
         for (PCModel model : order.getModels()) {
+            // Get only preset model
             if(model instanceof PresetModel presetModel){
+
                 String manufacturer = presetModel.getManufacturer();
                 String modelName = presetModel.getName();
 
@@ -85,7 +88,6 @@ public final class PCShopImpl implements PCShop {
                 Integer currentModelCount = modelsForManufacturer.get(modelName);
 
                 // If we have never seen this model, set its count to 1
-
                 if(currentModelCount == null){
                     modelsForManufacturer.put(modelName, 1);
                 }
@@ -153,10 +155,14 @@ public final class PCShopImpl implements PCShop {
         // Get all the fulfilled orders
         for(Order order: this.orderHistory){
             if(order.getOrderStatus() == OrderStatus.FULFILLED){
+                // get customer
                 Customer customer = order.getCustomer();
+                // check if we have encountered this customer before
+                // Yes increment
                 if(customerOrderCounts.containsKey(customer)){
                     customerOrderCounts.put(customer, customerOrderCounts.get(customer) + 1);
                 }
+                // No add
                 else {
                     customerOrderCounts.put(customer,1);
                 }
