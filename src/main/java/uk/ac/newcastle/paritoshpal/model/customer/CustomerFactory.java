@@ -11,7 +11,34 @@ import java.util.Map;
  */
 
 //Todo : Explain why we chose factory clearly in the report
+
+    /*
+        Arguments for a factory :
+        Two customers are considered to be the same if they have the same name.
+
+        now
+        Customer customer1 = new Customer(new Name("John","Smith"));
+        Customer customer2 = new Customer(new Name("John","Smith"));
+
+        // This is true.
+        customer1.equals(customer2) //-> true
+
+        // This is false
+        customer1 == customer2
+
+        // The analytics will still work without the customer factory
+        as the method relies on the equals and hash code.
+        // Given the requirements - we are considering the same ( we can implement the factory )
+
+     */
     //Todo : Why Our keys are not weak - because of validation and normalization in place.
+
+    // Keys are strong because we have key as Name
+    // This name has equals and hashcode implemented.
+
+    // eg: new Name("John" ,"Doe") and new Name("Jane","Smith")
+    // could generate the same hash code.
+    // But it will use keys equals method to find the exact match.
 
 
 public final class CustomerFactory {
