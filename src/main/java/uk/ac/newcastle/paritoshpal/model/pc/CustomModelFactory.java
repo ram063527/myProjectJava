@@ -1,10 +1,6 @@
 package main.java.uk.ac.newcastle.paritoshpal.model.pc;
 
-import java.util.HashMap;
-import java.util.Map;
-
-
-public class CustomModelFactory {
+public final class CustomModelFactory {
 
     private static long modelCounter = 0;
 
