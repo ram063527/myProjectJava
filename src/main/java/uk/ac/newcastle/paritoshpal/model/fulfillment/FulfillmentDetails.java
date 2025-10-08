@@ -17,7 +17,7 @@ public final class FulfillmentDetails {
     private final Map<String,Integer> warehouseParts;
 
     /**
-     * Constructs a new FulfillmentDetails instance.
+     * Constructs a new {@code FulfillmentDetails} instance.
      * @param presetOrders A map where the key is the manufacturer's name and the value
      * is another map, holding preset model names and their required quantities.
      * @param warehouseParts A map where the key is the name of a part for a custom
