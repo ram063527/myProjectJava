@@ -125,7 +125,7 @@ class PresetModelTest {
         }
 
         @Test
-        @DisplayName("Test toString() returns correct format")
+        @DisplayName("Test toString()")
         void testToString() {
             PresetModel model = new PresetModel(name, manufacturer, parts);
             assertEquals("Preset Model: dell xps13", model.toString());

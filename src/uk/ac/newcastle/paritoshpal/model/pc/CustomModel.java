@@ -2,6 +2,7 @@ package uk.ac.newcastle.paritoshpal.model.pc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.MissingResourceException;
 import java.util.Objects;
 
 /**
@@ -44,7 +45,12 @@ public final class CustomModel extends AbstractPCModel{
      * @param part the part to remove.
      */
     public void removePart(String part) {
-        this.parts.remove(part);
+        if(this.parts.contains(part)){
+            this.parts.remove(part);
+        }
+        else{
+            throw new RuntimeException("Cannot remove part which doesnt exists ");
+        }
     }
 
     /**
