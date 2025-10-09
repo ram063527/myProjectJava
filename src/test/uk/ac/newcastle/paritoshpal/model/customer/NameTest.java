@@ -1,69 +1,145 @@
 package test.uk.ac.newcastle.paritoshpal.model.customer;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import uk.ac.newcastle.paritoshpal.model.customer.Name;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
+import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for {@link Name} class.
+ */
 class NameTest {
 
-    @Test
-    void testNameCreation(){
-        // Setup
-        String firstName = "Paritosh";
-        String lastName = "Pal";
+    @Nested
+    @DisplayName("Name creation and Normalization Tests")
+    class NameCreationTests{
 
-        // Execution
-        Name name = new Name(firstName,lastName);
+        @Test
+        @DisplayName("Test normal name creation")
+        void testNormalNameCreation(){
+            // setup
+            String firstName = "Paritosh";
+            String lastName = "Pal";
+            Name name = new Name(firstName,lastName);
+            assertEquals("paritosh",name.getFirstName());
+            assertEquals("pal",name.getLastName());
+        }
 
-        // verification
-        //  Normal Case
-        assertEquals("paritosh",name.getFirstName());
-        assertEquals("pal",name.getLastName());
+        @Test
+        @DisplayName("Test name creation with leading and trailing whitespace")
+        void testNameNormalizationWhitespace(){
+            String firstName = "  Paritosh          ";
+            String lastName = " Pal    ";
 
-        // null case
-        String firstName2 = null;
-        String lastName2 = "Pal";
-        assertThrowsExactly(IllegalArgumentException.class,()->{
-            Name name2 = new Name(firstName2,lastName2);
-        });
+            Name name = new Name(firstName,lastName);
+            assertEquals("paritosh",name.getFirstName());
+            assertEquals("pal",name.getLastName());
 
-        // invalid character
-        String firstName3 = "Paritosh@12";
-        String lastName3 = "pal23";
-        assertThrowsExactly(IllegalArgumentException.class,()->{
-            Name name3 = new Name(firstName3,lastName3);
-        });
+        }
 
-        // normalization
-        String firstName4 = "Paritosh    ";
-        String lastName4 = "      Pal    ";
-        assertEquals("paritosh",name.getFirstName());
-        assertEquals("pal",name.getLastName());
+        @Test
+        @DisplayName("Test name creation with internal whitespaces")
+        void testNameNormalizationInternalWhitespace(){
+            String firstName = "John    Doe";
+            String lastName = "Van   Der        Beek";
+            Name name = new Name(firstName,lastName);
+            assertEquals("john doe",name.getFirstName());
+            assertEquals("van der beek",name.getLastName());
+        }
     }
 
-    @Test
-    void getFirstName() {
+    @Nested
+    @DisplayName("Invalid name creation tests")
+    class InvalidNameCreationTests{
+
+        @Test
+        @DisplayName("Test creation with null first or last names")
+        void testNullName(){
+            assertThrowsExactly(IllegalArgumentException.class,()->
+                    new Name("paritosh",null));
+        }
+
+        @Test
+        @DisplayName("Test creation with empty name")
+        void testEmptyName(){
+            assertThrowsExactly(IllegalArgumentException.class,()->
+                    new Name("","Pal"));
+        }
+
+        @Test
+        @DisplayName("Test creation with invalid character")
+        void testInvalidCharacters(){
+            assertThrowsExactly(IllegalArgumentException.class,()->
+                    new Name("paritosh@23232","pal"));
+        }
+
     }
 
-    @Test
-    void getLastName() {
+    @Nested
+    @DisplayName("Object method tests")
+    class ObjectMethodTests{
+
+        @Test
+        @DisplayName("Test toString()")
+        void testToString(){
+            Name name = new Name("Paritosh","Pal");
+            assertEquals("paritosh - pal",name.toString());
+        }
+
+        @Test
+        @DisplayName("Test equals() and hashcode()")
+        void testEqualsAndHashCode(){
+            Name name1 = new Name("Paritosh","Pal");
+            Name name2 = new Name("Paritosh","Pal");
+            Name name3 = new Name("Paritosh P","al");
+
+            // Equals
+            assertEquals(name1,name2);
+            assertEquals(name2,name1);
+            assertNotEquals(name1,name3);
+
+            // hashcode
+            assertEquals(name1.hashCode(),name2.hashCode());
+            assertNotEquals(name1.hashCode(),name3.hashCode());
+
+        }
+
     }
 
-    @Test
-    void testToString() {
-    }
+    @Nested
+    @DisplayName("Test valueOf() Method")
+    class valueOfTests{
 
-    @Test
-    void valueOf() {
-    }
+        @Test
+        @DisplayName("Test valueOf() with valid string")
+        void testValueOfValidString(){
+            String nameStr = "Paritosh - pal";
+            Name name = Name.valueOf(nameStr);
+            assertEquals("paritosh",name.getFirstName());
+            assertEquals("pal",name.getLastName());
+        }
 
-    @Test
-    void testEquals() {
-    }
+        @Test
+        @DisplayName("Test valueOf with invalid format")
+        void testValueOfInvalidFormat(){
+            String nameStr = "Paritosh pal";
+            assertThrowsExactly(IllegalArgumentException.class,()->
+            {
+                Name name = Name.valueOf(nameStr);
+            });
+        }
 
-    @Test
-    void testHashCode() {
+        @Test
+        @DisplayName("Test valueOf with null")
+        void testValueOfNull(){
+            String nameStr = null;
+            assertThrowsExactly(IllegalArgumentException.class,()->
+            {
+                Name name = Name.valueOf(nameStr);
+            }
+            );
+        }
     }
 }

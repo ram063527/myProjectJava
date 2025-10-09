@@ -12,6 +12,7 @@ public final class Customer {
 
     /**
      * Constructs a new {@code Customer} instance from the given name.
+     * Should only be instantiated by the factory.
      *
      * @param name the name object; cannot be null.
      * @throws IllegalArgumentException if {@code name} is null.

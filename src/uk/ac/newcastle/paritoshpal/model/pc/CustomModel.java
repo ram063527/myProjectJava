@@ -33,6 +33,8 @@ public final class CustomModel extends AbstractPCModel{
     public void addPart(String part) {
         if(part!=null && !part.trim().isEmpty()){
             this.parts.add(part);
+        }else{
+            throw new IllegalArgumentException("Part cannot be null or empty");
         }
     }
 

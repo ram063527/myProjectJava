@@ -17,6 +17,7 @@ public final class CreditCard {
     /**
      * Constructs a new {@code CreditCard} instance from the given number, expiry date
      * and holder name.
+     * Should only be instantiated by the factory.
      *
      * @param number the unique 8-digit card number; must contain only digits.
      * @param expiryDate the expiration date of the card; cannot be null.
