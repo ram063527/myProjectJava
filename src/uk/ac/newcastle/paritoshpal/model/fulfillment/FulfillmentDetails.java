@@ -1,4 +1,4 @@
-package main.java.uk.ac.newcastle.paritoshpal.model.fulfillment;
+package uk.ac.newcastle.paritoshpal.model.fulfillment;
 
 import java.util.Map;
 import java.util.Objects;

@@ -1,4 +1,4 @@
-package main.java.uk.ac.newcastle.paritoshpal.model.order;
+package uk.ac.newcastle.paritoshpal.model.order;
 
 public enum OrderStatus {
     PLACED,

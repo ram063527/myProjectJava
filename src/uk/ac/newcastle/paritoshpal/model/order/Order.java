@@ -1,8 +1,10 @@
-package main.java.uk.ac.newcastle.paritoshpal.model.order;
+package uk.ac.newcastle.paritoshpal.model.order;
 
-import main.java.uk.ac.newcastle.paritoshpal.model.customer.Customer;
-import main.java.uk.ac.newcastle.paritoshpal.model.payment.CreditCard;
-import main.java.uk.ac.newcastle.paritoshpal.model.pc.PCModel;
+
+
+import uk.ac.newcastle.paritoshpal.model.customer.Customer;
+import uk.ac.newcastle.paritoshpal.model.payment.CreditCard;
+import uk.ac.newcastle.paritoshpal.model.pc.PCModel;
 
 import java.util.Date;
 import java.util.List;

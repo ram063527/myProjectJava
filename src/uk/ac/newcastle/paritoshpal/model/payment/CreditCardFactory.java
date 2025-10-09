@@ -1,4 +1,4 @@
-package main.java.uk.ac.newcastle.paritoshpal.model.payment;
+package uk.ac.newcastle.paritoshpal.model.payment;
 
 import java.util.Date;
 import java.util.HashMap;

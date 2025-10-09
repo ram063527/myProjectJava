@@ -1,7 +1,7 @@
-package main.java.uk.ac.newcastle.paritoshpal.dto;
+package uk.ac.newcastle.paritoshpal.dto;
 
 
-import main.java.uk.ac.newcastle.paritoshpal.model.pc.PresetModel;
+import uk.ac.newcastle.paritoshpal.model.pc.PresetModel;
 
 /**
  * A data transfer object to hold statistics about the most ordered models.

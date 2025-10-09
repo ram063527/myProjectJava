@@ -1,4 +1,4 @@
-package main.java.uk.ac.newcastle.paritoshpal.dto;
+package uk.ac.newcastle.paritoshpal.dto;
 
 /**
  * A data transfer object to hold statistics about the most ordered parts

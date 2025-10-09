@@ -1,4 +1,4 @@
-package main.java.uk.ac.newcastle.paritoshpal.model.customer;
+package uk.ac.newcastle.paritoshpal.model.customer;
 
 import java.util.HashMap;
 import java.util.Map;

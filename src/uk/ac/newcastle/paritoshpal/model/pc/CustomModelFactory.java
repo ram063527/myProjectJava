@@ -1,4 +1,4 @@
-package main.java.uk.ac.newcastle.paritoshpal.model.pc;
+package uk.ac.newcastle.paritoshpal.model.pc;
 
 /**
  * A factory for creating {@link CustomModel} instances, each with a

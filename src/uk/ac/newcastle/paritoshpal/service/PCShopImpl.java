@@ -1,16 +1,18 @@
-package main.java.uk.ac.newcastle.paritoshpal.service;
+package uk.ac.newcastle.paritoshpal.service;
 
-import main.java.uk.ac.newcastle.paritoshpal.dto.CustomerStats;
-import main.java.uk.ac.newcastle.paritoshpal.dto.ModelStats;
-import main.java.uk.ac.newcastle.paritoshpal.dto.PartsStats;
-import main.java.uk.ac.newcastle.paritoshpal.model.customer.Customer;
-import main.java.uk.ac.newcastle.paritoshpal.model.fulfillment.FulfillmentDetails;
-import main.java.uk.ac.newcastle.paritoshpal.model.order.Order;
-import main.java.uk.ac.newcastle.paritoshpal.model.order.OrderStatus;
-import main.java.uk.ac.newcastle.paritoshpal.model.payment.CreditCard;
-import main.java.uk.ac.newcastle.paritoshpal.model.pc.CustomModel;
-import main.java.uk.ac.newcastle.paritoshpal.model.pc.PCModel;
-import main.java.uk.ac.newcastle.paritoshpal.model.pc.PresetModel;
+
+
+import uk.ac.newcastle.paritoshpal.dto.CustomerStats;
+import uk.ac.newcastle.paritoshpal.dto.ModelStats;
+import uk.ac.newcastle.paritoshpal.dto.PartsStats;
+import uk.ac.newcastle.paritoshpal.model.customer.Customer;
+import uk.ac.newcastle.paritoshpal.model.fulfillment.FulfillmentDetails;
+import uk.ac.newcastle.paritoshpal.model.order.Order;
+import uk.ac.newcastle.paritoshpal.model.order.OrderStatus;
+import uk.ac.newcastle.paritoshpal.model.payment.CreditCard;
+import uk.ac.newcastle.paritoshpal.model.pc.CustomModel;
+import uk.ac.newcastle.paritoshpal.model.pc.PCModel;
+import uk.ac.newcastle.paritoshpal.model.pc.PresetModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
