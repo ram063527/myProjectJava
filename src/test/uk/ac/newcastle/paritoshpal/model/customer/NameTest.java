@@ -1,8 +1,9 @@
 package test.uk.ac.newcastle.paritoshpal.model.customer;
 
-import main.java.uk.ac.newcastle.paritoshpal.model.customer.Name;
 import org.junit.jupiter.api.Test;
+import uk.ac.newcastle.paritoshpal.model.customer.Name;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 
 class NameTest {
