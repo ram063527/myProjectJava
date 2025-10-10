@@ -12,10 +12,8 @@ import uk.ac.newcastle.paritoshpal.model.pc.CustomModel;
 import uk.ac.newcastle.paritoshpal.model.pc.PCModel;
 import uk.ac.newcastle.paritoshpal.model.pc.PresetModel;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * The concrete implementation of the {@link PCShop} service interface.
@@ -136,106 +134,68 @@ public final class PCShopImpl implements PCShop {
 
     @Override
     public CustomerStats getLargestCustomer() {
-        // create a map of customer integer
 
-        Map<Customer, Integer> customerOrderCounts = getCustomerOrderCounts();
+        // Get all the orders
+        Map<Customer,Long> customerOrderCounts = this.orderHistory.stream()
+                // get only the fulfilled orders
+                .filter(order -> order.getOrderStatus()==OrderStatus.FULFILLED)
+                // group by customer and count
+                .collect(Collectors.groupingBy(Order::getCustomer,Collectors.counting()));
 
         if(customerOrderCounts.isEmpty()){
             return null;
         }
+        // Define a reversed comparator for the key (the Customer)
+        Comparator<Customer> customerNameComparator = Comparator
+                .comparing(Customer::getFirstName)
+                .thenComparing(Customer::getLastName)
+                .reversed();
 
-        Customer largestCustomer = null;
-        int maxOrders = -1;
-
-        for(Map.Entry<Customer,Integer> entry: customerOrderCounts.entrySet()){
-            Customer currentCustomer = entry.getKey();
-            int currentOrderCount = entry.getValue();
-
-            if(largestCustomer==null || currentOrderCount > maxOrders){
-                maxOrders = currentOrderCount;
-                largestCustomer = currentCustomer;
-            }
-            else if(currentOrderCount == maxOrders){
-                if(currentCustomer.toString().compareTo(largestCustomer.toString()) < 0){
-                    largestCustomer = currentCustomer;
-                }
-            }
-        }
-        return new CustomerStats(largestCustomer,maxOrders);
+        // get the customer order counts
+        return customerOrderCounts.entrySet().stream()
+                // first of all compare by the order count i.e values
+                .max(Map.Entry.<Customer,Long>comparingByValue()
+                        .thenComparing(Map.Entry::getKey,customerNameComparator)
+                ).map(entry -> new CustomerStats(entry.getKey(),entry.getValue().intValue()))
+                .orElse(null);
     }
-
-    private Map<Customer, Integer> getCustomerOrderCounts() {
-        Map<Customer,Integer> customerOrderCounts = new HashMap<>();
-
-        // Get all the fulfilled orders
-        for(Order order: this.orderHistory){
-            if(order.getOrderStatus() == OrderStatus.FULFILLED){
-                // get customer
-                Customer customer = order.getCustomer();
-                // check if we have encountered this customer before
-                // Yes increment
-                if(customerOrderCounts.containsKey(customer)){
-                    customerOrderCounts.put(customer, customerOrderCounts.get(customer) + 1);
-                }
-                // No add
-                else {
-                    customerOrderCounts.put(customer,1);
-                }
-            }
-        }
-        return customerOrderCounts;
-    }
-
     /**
      * {@inheritDoc}
      */
 
     @Override
     public ModelStats getMostOrderedModel() {
-        Map<PresetModel,Integer> presetModelOrderCounts = new HashMap<>();
-        for (Order order : this.orderHistory) {
-            if(order.getOrderStatus() == OrderStatus.FULFILLED){
-                for(PCModel model : order.getModels()){
-                    if(model instanceof PresetModel presetModel){
-                        if(presetModelOrderCounts.containsKey(presetModel)){
-                            presetModelOrderCounts.put(presetModel, presetModelOrderCounts.get(presetModel) + 1);
-                        }
-                        else  {
-                            presetModelOrderCounts.put(presetModel, 1);
-                        }
-                    }
-                }
-            }
-        }
-        if(presetModelOrderCounts.isEmpty()){
+       // Get all the models
+        Map<PresetModel,Long> presetModelCounts = this.orderHistory.stream()
+                // filter out only fulfilled
+                .filter(order-> order.getOrderStatus()==OrderStatus.FULFILLED)
+                // open the List<PCModel> and make a stream
+                .flatMap(order -> order.getModels().stream())
+                // filter out only Preset Models
+                .filter(model -> model instanceof PresetModel)
+                // cast the result to PC Model Explicitly -- Safe because we already filtered out Preset Models
+                .map(model -> (PresetModel)model)
+                // Group by PresetModel and count
+                .collect(Collectors.groupingBy(model-> model,Collectors.counting()));
+
+        if(presetModelCounts.isEmpty()){
             return null;
         }
-        PresetModel highestOrdered = null;
-        int maxOrders = -1;
 
-        for(Map.Entry<PresetModel,Integer> entry: presetModelOrderCounts.entrySet()){
-            PresetModel presetModel = entry.getKey();
-            Integer currentOrderCount = entry.getValue();
+        // Define a reversed comparator for the PresetModel
+        Comparator<PresetModel> modelNameComparator = Comparator
+                .comparing(PresetModel::getManufacturer)
+                .thenComparing(PresetModel::getName)
+                .reversed();
 
-            if(highestOrdered==null || currentOrderCount > maxOrders){
-                highestOrdered = presetModel;
-                maxOrders = currentOrderCount;
-            }
-            else if(currentOrderCount == maxOrders){
-                int manufacturerComparison = presetModel.getManufacturer().compareTo(highestOrdered.getManufacturer());
+        return presetModelCounts.entrySet().stream()
+                // Firstly compare by values
+                .max(Map.Entry.<PresetModel,Long>comparingByValue()
+                        .thenComparing(Map.Entry::getKey,modelNameComparator))
+                // We got the winning enty's key and value ; put it into ModelStats
+                .map(entry-> new ModelStats(entry.getKey(),entry.getValue().intValue()))
+                .orElse(null);
 
-                if(manufacturerComparison < 0){
-                    highestOrdered = presetModel;
-                }
-                else if(manufacturerComparison == 0){
-                    // same manufacturer
-                    if(presetModel.getName().compareTo(highestOrdered.getName()) < 0){
-                        highestOrdered = presetModel;
-                    }
-                }
-            }
-        }
-        return new ModelStats(highestOrdered,maxOrders);
     }
 
     /**
@@ -244,47 +204,24 @@ public final class PCShopImpl implements PCShop {
 
     @Override
     public PartsStats getMostOrderedPart() {
-        Map<String, Integer> partsOrderCounts = getPartsOrderCounts();
-        if(partsOrderCounts.isEmpty()){
+
+        Map<String,Long> partsCounts = this.orderHistory.stream()
+                .filter(order->order.getOrderStatus()==OrderStatus.FULFILLED)
+                .flatMap(order-> order.getModels().stream())
+                .filter(model -> model instanceof CustomModel)
+                .map(model -> (CustomModel) model)
+                .flatMap(model -> model.getParts().stream())
+                .collect(Collectors.groupingBy(part-> part,Collectors.counting()));
+
+        if(partsCounts.isEmpty()){
             return null;
         }
-        String highestOrderedPart = null;
-        int maxOrders = -1;
-        for(Map.Entry<String,Integer> entry: partsOrderCounts.entrySet()){
-            String part = entry.getKey();
-            Integer currentOrderCount = entry.getValue();
 
-            if(highestOrderedPart==null || currentOrderCount > maxOrders){
-                highestOrderedPart = part;
-                maxOrders = currentOrderCount;
-            }
-            else if(currentOrderCount == maxOrders){
-                if(part.compareTo(highestOrderedPart) < 0){
-                    highestOrderedPart = part;
-                }
-            }
-        }
-        return new PartsStats(highestOrderedPart,maxOrders);
+        return partsCounts.entrySet().stream()
+                .max(Map.Entry.<String,Long>comparingByValue()
+                        .thenComparing(Map.Entry::getKey,Comparator.reverseOrder()))
+                .map(entry -> new PartsStats(entry.getKey(),entry.getValue().intValue()))
+                .orElse(null);
     }
 
-    private Map<String, Integer> getPartsOrderCounts() {
-        Map<String,Integer> partsOrderCounts = new HashMap<>();
-        for(Order order: this.orderHistory){
-            if(order.getOrderStatus() == OrderStatus.FULFILLED){
-                for(PCModel model : order.getModels()){
-                    if(model instanceof CustomModel customModel){
-                        for (String part : model.getParts()) {
-                            if(partsOrderCounts.containsKey(part)){
-                                partsOrderCounts.put(part, partsOrderCounts.get(part) + 1);
-                            }
-                            else  {
-                                partsOrderCounts.put(part, 1);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return partsOrderCounts;
-    }
 }

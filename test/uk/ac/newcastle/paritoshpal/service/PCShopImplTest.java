@@ -146,6 +146,7 @@ class PCShopImplTest {
             shop.placeOrder(List.of(preset1), custB, cardB);
 
             CustomerStats stats = shop.getLargestCustomer();
+            assertNotNull(stats);
             assertEquals(custA, stats.customer());
             assertEquals(2, stats.orderCount());
         }
@@ -162,7 +163,7 @@ class PCShopImplTest {
             shop.fulfillOrder(shop.placeOrder(List.of(preset3), custA, cardA));
 
             CustomerStats stats = shop.getLargestCustomer();
-            // FIX: Correct winner is custC based on alphabetical order of name.
+            assertNotNull(stats);
             assertEquals(custC, stats.customer());
             assertEquals(2, stats.orderCount());
         }
@@ -174,6 +175,7 @@ class PCShopImplTest {
             shop.fulfillOrder(shop.placeOrder(List.of(preset1, preset1, preset2, preset1), custA, cardA));
 
             ModelStats stats = shop.getMostOrderedModel();
+            assertNotNull(stats);
             assertEquals(preset1, stats.model());
             assertEquals(3, stats.modelCount());
         }
@@ -187,7 +189,8 @@ class PCShopImplTest {
             shop.fulfillOrder(shop.placeOrder(List.of(preset3, preset3), custB, cardB));
 
             ModelStats stats = shop.getMostOrderedModel();
-            // FIX: Correct winner is preset3 because "Apple" comes before "Dell".
+            // winner is preset3 because "Apple" comes before "Dell".
+            assertNotNull(stats);
             assertEquals(preset3, stats.model(), "Apple should win due to alphabetical tie-break on manufacturer");
             assertEquals(2, stats.modelCount());
         }
@@ -200,6 +203,7 @@ class PCShopImplTest {
             shop.fulfillOrder(shop.placeOrder(List.of(custom1), custA, cardA));
 
             PartsStats stats = shop.getMostOrderedPart();
+            assertNotNull(stats);
             assertEquals("RAM 16 GB", stats.parts());
             assertEquals(2, stats.partCount());
         }
@@ -211,6 +215,7 @@ class PCShopImplTest {
             shop.fulfillOrder(shop.placeOrder(List.of(custom1, custom2), custA, cardA));
 
             PartsStats stats = shop.getMostOrderedPart();
+            assertNotNull(stats);
             assertEquals("Case", stats.parts(), "'Case' should win due to alphabetical tie-break");
             assertEquals(2, stats.partCount());
         }
