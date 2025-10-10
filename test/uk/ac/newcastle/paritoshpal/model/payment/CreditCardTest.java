@@ -13,14 +13,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CreditCardTest {
 
-
-    String validNumber = "12345678";
-    String validHolder = "paritosh pal";
-    Date validDate = new Date();
-    CreditCard creditCard = CreditCardFactory.getCreditCard(validNumber,validDate,validHolder);
     private Date createDate(int year, int month, int day) {
         Calendar cal = Calendar.getInstance();
-        cal.set(year, month, day);
+        cal.set(year, month, day,0,0,0);
+        cal.set(Calendar.MILLISECOND, 0);
         return cal.getTime();
 
     }
@@ -35,14 +31,14 @@ class CreditCardTest {
         @DisplayName("Test normal credit card creation")
         void testNormalCreditCardCreation(){
             // setup
-            String number = "12345678";
-            Date expiryDate = new Date();
+            String number = "11223344";
+            Date expiryDate = createDate(2025,Calendar.MARCH,22);
             String holder = "paritosh pal";
 
             CreditCard cc = CreditCardFactory.getCreditCard(number, expiryDate, holder);
 
-            Date expectedDate = new Date();
-            assertEquals("12345678", cc.getNumber());
+            Date expectedDate =  createDate(2025,2,22);
+            assertEquals("11223344", cc.getNumber());
             assertEquals("paritosh pal", cc.getHolder());
             assertEquals(expectedDate, cc.getExpiryDate());
         }
@@ -50,9 +46,8 @@ class CreditCardTest {
         @Test
         @DisplayName("Test creation with invalid number")
         void testInvalidNumber(){
-            Date expiryDate = new Date();
+            Date expiryDate = createDate(2028,Calendar.MARCH,22);
             String holder = "paritosh pal";
-            Date expectedDate = new Date();
             assertThrowsExactly(IllegalArgumentException.class,()-> CreditCardFactory.getCreditCard("12345", expiryDate, holder));
             assertThrowsExactly(IllegalArgumentException.class,()-> CreditCardFactory.getCreditCard(null, expiryDate, holder));
             assertThrowsExactly(IllegalArgumentException.class,()-> CreditCardFactory.getCreditCard("abcde", expiryDate, holder));
@@ -61,16 +56,15 @@ class CreditCardTest {
         @Test
         @DisplayName("Test creation with invalid holder")
         void testInvalidHolder(){
-            Date expiryDate = new Date();
-            String number = "12345678";
-            Date expectedDate = new Date();
+            Date expiryDate = createDate(2029, Calendar.MAY, 2);
+            String number = "98765432";
             assertThrowsExactly(IllegalArgumentException.class,()-> CreditCardFactory.getCreditCard(number, expiryDate, "paritosh@123"));
             assertThrowsExactly(IllegalArgumentException.class,()-> CreditCardFactory.getCreditCard(number, expiryDate, null));
         }
 
         @Test
         void testNullDate(){
-            assertThrowsExactly(IllegalArgumentException.class,()-> CreditCardFactory.getCreditCard("12345678", null, "Valid Holder"));
+            assertThrowsExactly(IllegalArgumentException.class,()-> CreditCardFactory.getCreditCard("33445566", null, "Valid Holder"));
         }
 
 
@@ -83,31 +77,35 @@ class CreditCardTest {
     class FunctionalityTests {
 
 
-
-
         @Test
         @DisplayName("Test getHolder()")
         void testGetHolder(){
-            assertEquals("paritosh pal",validHolder);
+            Date expiry = createDate(2030, Calendar.JUNE, 15);
+            CreditCard card = CreditCardFactory.getCreditCard("44556677", expiry, "  PARITOSH PAL  ");
+            assertEquals("paritosh pal",card.getHolder());
         }
 
         @Test
         @DisplayName("Test getNumber()")
         void testGetNumber(){
-            assertEquals("12345678",validNumber);
+            Date expiry = createDate(2032, Calendar.JUNE, 15);
+            CreditCard card = CreditCardFactory.getCreditCard("44326677", expiry, "  PARITOSH PAL  ");
+            assertEquals("44326677",card.getNumber());
         }
 
         @Test
         @DisplayName("Test getExpiryDate()")
         void testGetExpiryDate(){
-            assertEquals(validDate,creditCard.getExpiryDate());
+            Date expiry = createDate(2032, Calendar.JUNE, 15);
+            CreditCard card = CreditCardFactory.getCreditCard("44326677", expiry, "  PARITOSH PAL  ");
+            assertEquals(expiry,card.getExpiryDate());
         }
 
         @Test
         @DisplayName("Test isValid for future Dates")
         void testIsValidForFutureDate() {
             Date futureDate = createDate(2030, Calendar.DECEMBER, 31);
-            CreditCard card = CreditCardFactory.getCreditCard("12341234", futureDate, "valid holder");
+            CreditCard card = CreditCardFactory.getCreditCard("55667788", futureDate, "valid holder");
             assertTrue(card.isValid());
         }
 
@@ -115,7 +113,7 @@ class CreditCardTest {
         @DisplayName("isValid() returns false for expired card")
         void testIsValidForPastDate() {
             Date pastDate = createDate(2020, Calendar.JANUARY, 1);
-            CreditCard card = CreditCardFactory.getCreditCard("44445555", pastDate, "Expired Holder");
+            CreditCard card = CreditCardFactory.getCreditCard("66778899", pastDate, "Expired Holder");
 
             assertFalse(card.isValid());
         }
@@ -133,21 +131,29 @@ class CreditCardTest {
         @DisplayName("Test equals() is based only on card number")
         void testEqualsContract() {
 
+            String sameNumber = "77889900";
+            Date pastDate = createDate(2020, Calendar.JANUARY, 1);
+            Date futureDate = createDate(2030, Calendar.DECEMBER, 31);
 
-            CreditCard card1 = CreditCardFactory.getCreditCard(validNumber, futureDate, "John Doe");
-            CreditCard card2 = CreditCardFactory.getCreditCard(validNumber, pastDate, "Jane Doe"); // Same number, different details
+            CreditCard card1 = CreditCardFactory.getCreditCard(sameNumber, futureDate, "John Doe");
+            CreditCard card2 = CreditCardFactory.getCreditCard(sameNumber, pastDate, "Jane Doe"); // Same number, different details
             CreditCard card3 = CreditCardFactory.getCreditCard("11112222", futureDate, "John Doe"); // Different number
 
-            assertEquals(card1, card2, "Cards with the same number should be equal");
-            assertNotEquals(card1, card3, "Cards with different numbers should not be equal");
+            assertEquals(card1, card2);
+            assertNotEquals(card1, card3);
         }
 
         @Test
         @DisplayName("Test hashCode() is based only on card number")
         void testHashCodeContract() {
-            CreditCard card1 = CreditCardFactory.getCreditCard(validNumber, futureDate, "John Doe");
-            CreditCard card2 = CreditCardFactory.getCreditCard(validNumber, pastDate, "Jane Doe"); // Same number
-            CreditCard card3 = CreditCardFactory.getCreditCard("11112222", futureDate, "John Doe"); // Different number
+
+            String sameNumber = "88990011";
+            Date pastDate = createDate(2020, Calendar.JANUARY, 1);
+            Date futureDate = createDate(2030, Calendar.DECEMBER, 31);
+
+            CreditCard card1 = CreditCardFactory.getCreditCard(sameNumber, futureDate, "John Doe");
+            CreditCard card2 = CreditCardFactory.getCreditCard(sameNumber, pastDate, "Jane Doe"); // Same number
+            CreditCard card3 = CreditCardFactory.getCreditCard("22334455", futureDate, "John Doe"); // Different number
 
             assertEquals(card1.hashCode(), card2.hashCode());
             assertNotEquals(card1.hashCode(), card3.hashCode());

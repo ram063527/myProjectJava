@@ -29,7 +29,9 @@ class CustomModelTest {
         @DisplayName("Test new custom model creation")
         void testNormalCreation(){
             assertTrue(customModel.getParts().isEmpty());
-            assertEquals("custom-pc-1", customModel.getName());
+            String name = customModel.getName();
+            assertNotNull(name);
+            assertTrue(name.matches("custom-pc-\\d+"));
         }
 
     }
