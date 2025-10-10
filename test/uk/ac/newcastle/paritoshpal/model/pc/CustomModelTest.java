@@ -63,12 +63,11 @@ class CustomModelTest {
 
         @Test
         @DisplayName("Test removeParts() method")
-        void testRemoveExistinPart(){
+        void testRemoveExistingPart(){
             String partToRemove = "RAM: 24GB";
             customModel.addPart(partToRemove);
             customModel.addPart("CPU: Ryzen 7");
-
-            customModel.removePart(partToRemove);
+            assertTrue( customModel.removePart(partToRemove));
             assertEquals(1, customModel.getParts().size());
             assertFalse(customModel.getParts().contains(partToRemove));
         }
@@ -78,9 +77,7 @@ class CustomModelTest {
         void testRemoveNonExistentPart(){
             customModel.addPart("CPU: Ryzen 7");
             customModel.addPart("RAM: 24GB");
-            assertThrowsExactly(RuntimeException.class,()->
-                    customModel.removePart("GPU: Intel Iris 24GB"));
-            assertEquals(2,customModel.getParts().size());
+            assertFalse(customModel.removePart("RAM: 65GB"));
         }
     }
 

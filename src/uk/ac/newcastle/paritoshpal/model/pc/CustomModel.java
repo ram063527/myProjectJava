@@ -40,16 +40,17 @@ public final class CustomModel extends AbstractPCModel{
 
     /**
      * Removes the first occurrence of a specific part from this custom model.
-     * If the part is not in the list, no action is taken.
-     * @param part the part to remove.
+     *
+     * @param part the part to remove; cannot be null or empty.
+     * @return {@code true} if the part was successfully removed, {@code false} otherwise.
+     * @throws IllegalArgumentException if the part to remove is null or empty.
      */
-    public void removePart(String part) {
-        if(this.parts.contains(part)){
-            this.parts.remove(part);
+    public boolean removePart(String part) {
+        if (part == null || part.trim().isEmpty()) {
+            throw new IllegalArgumentException("Part to remove cannot be null or empty");
         }
-        else{
-            throw new RuntimeException("Cannot remove part which doesnt exists ");
-        }
+        // The list's remove method handle the logic and returns its result.
+        return this.parts.remove(part);
     }
 
     /**
