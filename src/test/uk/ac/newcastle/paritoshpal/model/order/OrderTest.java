@@ -140,6 +140,42 @@ class OrderTest {
     @DisplayName("Getter methods tests")
     class GetterMethodsTests{
 
+        @Test
+        @DisplayName("Test getCustomer()")
+        void testGetCustomer(){
+            Order order = new Order(creditCard, models, customer);
+            assertEquals(customer,order.getCustomer());
+        }
+
+        @Test
+        @DisplayName("Test getModels()")
+        void testGetModels(){
+            Order order = new Order(creditCard, models, customer);
+            assertEquals(models,order.getModels());
+        }
+
+        @Test
+        @DisplayName("Test getOrderDate()")
+        void testGetOrderDate(){
+            Order order = new Order(creditCard, models, customer);
+            assertEquals(order.getOrderDate(),order.getOrderDate());
+        }
+        @Test
+        @DisplayName("Test getOrderStatus()")
+        void testGetOrderStatus(){
+            Order order = new Order(creditCard, models, customer);
+            assertEquals(OrderStatus.PLACED,order.getOrderStatus());
+            order.fulfill();
+            assertEquals(OrderStatus.FULFILLED,order.getOrderStatus());
+        }
+
+        @Test
+        @DisplayName("Test getCreditCard()")
+        void getCreditCard(){
+            Order order = new Order(creditCard, models, customer);
+            assertEquals(creditCard,order.getCreditCard());
+        }
+
     }
 
 
