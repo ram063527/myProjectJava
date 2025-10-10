@@ -1,4 +1,4 @@
-package test.uk.ac.newcastle.paritoshpal.model.customer;
+package uk.ac.newcastle.paritoshpal.model.customer;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -6,7 +6,8 @@ import uk.ac.newcastle.paritoshpal.model.customer.Customer;
 import uk.ac.newcastle.paritoshpal.model.customer.CustomerFactory;
 import uk.ac.newcastle.paritoshpal.model.customer.Name;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class CustomerTest {
 

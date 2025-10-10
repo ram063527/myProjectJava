@@ -1,4 +1,4 @@
-package test.uk.ac.newcastle.paritoshpal.model.pc;
+package uk.ac.newcastle.paritoshpal.model.pc;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

@@ -1,4 +1,4 @@
-package test.uk.ac.newcastle.paritoshpal.model.customer;
+package uk.ac.newcastle.paritoshpal.model.customer;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

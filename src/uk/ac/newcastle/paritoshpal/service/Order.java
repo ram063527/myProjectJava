@@ -1,4 +1,4 @@
-package uk.ac.newcastle.paritoshpal.model.order;
+package uk.ac.newcastle.paritoshpal.service;
 
 
 
@@ -34,7 +34,7 @@ public final class Order {
      * @throws IllegalArgumentException if either of these fields are null or empty.
      */
 
-    public Order(CreditCard creditCard, List<PCModel> models, Customer customer) {
+     Order(CreditCard creditCard, List<PCModel> models, Customer customer) {
 
         if (customer == null || creditCard == null || models == null || models.isEmpty()) {
             throw new IllegalArgumentException("Customer, Credit Card, and a non-empty list of models are required.");
@@ -95,7 +95,7 @@ public final class Order {
      * Cancels the order if it is currently in the {@code PLACED} state.
      * @throws IllegalStateException if the order has already been fulfilled or cancelled.
      */
-    public void cancel() {
+     void cancel() {
         if (this.status == OrderStatus.PLACED) {
             this.status = OrderStatus.CANCELLED;
         } else {
@@ -107,7 +107,7 @@ public final class Order {
      * Fulfills the order if it is currently in the {@code PLACED}.
      * @throws IllegalStateException if the order has been cancelled or already fulfilled.
      */
-    public void fulfill() {
+     void fulfill() {
         if (this.status == OrderStatus.PLACED) {
             this.status = OrderStatus.FULFILLED;
         } else {

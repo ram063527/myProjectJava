@@ -6,7 +6,6 @@ import uk.ac.newcastle.paritoshpal.dto.ModelStats;
 import uk.ac.newcastle.paritoshpal.dto.PartsStats;
 import uk.ac.newcastle.paritoshpal.model.customer.Customer;
 import uk.ac.newcastle.paritoshpal.model.fulfillment.FulfillmentDetails;
-import uk.ac.newcastle.paritoshpal.model.order.Order;
 import uk.ac.newcastle.paritoshpal.model.payment.CreditCard;
 import uk.ac.newcastle.paritoshpal.model.pc.PCModel;
 

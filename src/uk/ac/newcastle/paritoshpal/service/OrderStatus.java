@@ -1,4 +1,4 @@
-package uk.ac.newcastle.paritoshpal.model.order;
+package uk.ac.newcastle.paritoshpal.service;
 
 public enum OrderStatus {
     PLACED,

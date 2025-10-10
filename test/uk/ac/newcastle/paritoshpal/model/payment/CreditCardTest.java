@@ -1,6 +1,5 @@
-package test.uk.ac.newcastle.paritoshpal.model.payment;
+package uk.ac.newcastle.paritoshpal.model.payment;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

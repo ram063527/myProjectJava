@@ -1,4 +1,4 @@
-package test.uk.ac.newcastle.paritoshpal.model.order;
+package uk.ac.newcastle.paritoshpal.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import uk.ac.newcastle.paritoshpal.model.customer.Customer;
 import uk.ac.newcastle.paritoshpal.model.customer.CustomerFactory;
-import uk.ac.newcastle.paritoshpal.model.order.Order;
-import uk.ac.newcastle.paritoshpal.model.order.OrderStatus;
 import uk.ac.newcastle.paritoshpal.model.payment.CreditCard;
 import uk.ac.newcastle.paritoshpal.model.payment.CreditCardFactory;
 import uk.ac.newcastle.paritoshpal.model.pc.CustomModel;
